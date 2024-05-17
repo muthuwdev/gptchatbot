@@ -18,4 +18,12 @@ export class ChatbotService {
     return this.http.post<any>(`${apiUrls.chatServiceApi}gmessage`,{message:message});
   }
 
+  modifyAssistantTools(openai:string, assistantId:string){
+    return this.http.post<any>(`${apiUrls.chatServiceApi}modifyAssitantTools`,{openai:openai, assistantId:assistantId});
+  }
+
+  gptmessage(openai:string| null, assistantId:string| null, message:string){
+    return this.http.post<any>(`${apiUrls.chatServiceApi}gptmessage`,{openai:openai, assistantId:assistantId, message:message});
+  }
+
 }

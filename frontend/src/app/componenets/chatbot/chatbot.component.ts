@@ -32,6 +32,19 @@ export class ChatbotComponent {
     });
   }
 
+  public gptmessage(){
+    this.messages.push({
+      user:'user',
+      message:this.message
+    });
+    const assistant_id = localStorage.getItem("assistant_id");
+    const api_key = localStorage.getItem("api_key");
+    this.chatbotService.gptmessage(api_key,assistant_id, this.message).subscribe((res:any)=>{
+      this.messages.push(res.data);
+      this.message = ''
+    });
+  }
+
   public getdata(val: any){
     this.assistantData = val;
   }
@@ -39,5 +52,12 @@ export class ChatbotComponent {
   onFormSubmit(formData: any) {
     // Handle the form data received from the child component
     console.log('Form Data in Parent:', formData);
+    this.chatbotService.modifyAssistantTools(formData.apikey, formData.assistantId).subscribe((res:any)=>{
+      if (res.status === 200) {
+        localStorage.setItem("assistant_id",formData.assistantId);
+        localStorage.setItem("api_key",formData.apikey);
+      } 
+    });
+    
   }
 }
