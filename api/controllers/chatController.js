@@ -4,13 +4,14 @@ import { createSuccess } from "../utils/success.js";
 
 export const modifyChatGptAssistantTools = async (req,res,next) => {
     // Best to receive enchripted open ai token and decript it to use in backend
-    const OpenAiToken = req.body.openai;
-    const openAiAssistantId = req.body.assistantId;
 
-    const retrieveAssitantUrl = `https://api.openai.com/v1/assistants/${openAiAssistantId}`;
     try {
+        const OpenAiToken = req.body.openai;
+        const openAiAssistantId = req.body.assistantId;
+    
+        const retrieveAssitentUrl = `https://api.openai.com/v1/assistants/${openAiAssistantId}`;
         // retrieve assistant
-        const assistantDataResponse = await fetch(retrieveAssitantUrl, {
+        const assistantDataResponse = await fetch(retrieveAssitentUrl, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${OpenAiToken}`,
@@ -77,7 +78,7 @@ export const modifyChatGptAssistantTools = async (req,res,next) => {
 };
 
 async function getWeatherForcast(cityParam, countryParam ) {
-    const apiKey = process.env.weather_api_key;
+    const apiKey = process.env.WEATHER_API_KEY;
     const city = cityParam;
     const country = countryParam;
     const apiUrl = `https://api.weatherbit.io/v2.0/forecast/daily?city=${city}&country=${country}&days=14&key=${apiKey}`;
